@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import user from '@testing-library/user-event'
 import UserForm from './userForm'
+import {vi} from 'vitest';
 
 test('it shows two inputs and a button', () => {
   render(<UserForm />)
@@ -14,23 +15,13 @@ test('it shows two inputs and a button', () => {
 
 })
 
-interface User {
-  name: string;
-  email: string;
-}
-
 test('it calls on onUserAdd when form is submitted', async () => {
-  //NOT THE BEST IMPLEMENTATION
+  
   // Try to render my component
 
-  const argList = [];
-
-  const callback = (userData) => {
-    argList.push(userData);
-  };
+  const mock = vi.fn()
   
-  
-  render(<UserForm onUserAdd={callback} />)
+  render(<UserForm onUserAdd={mock} />)
 
   const [nameInput , emailInput] = screen.getAllByRole('textbox')
 
@@ -49,8 +40,7 @@ test('it calls on onUserAdd when form is submitted', async () => {
   // Simulate clicking the button
   await user.click(button)
   // Assertion to make sure 'onUserAdd' is called.
-  expect(argList).toHaveLength(1);
-  expect(argList[0]).toEqual({ name: 'jane', email: 'jane@jane.com'})
-
+  expect(mock).toHaveBeenCalled();
+  expect(mock).toHaveBeenCalledWith({ name: 'jane', email: 'jane@jane.com'})
 
 })
