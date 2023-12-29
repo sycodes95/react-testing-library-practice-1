@@ -17,10 +17,14 @@ function App() {
     console.log(userList);
   },[userList])
 
+  const onUserAdd = ( user : User) => {
+    setUserList((prev) => [...prev, user]);
+  }
+
   return (
     <>
 
-      <UserForm setUserList={setUserList}/>
+      <UserForm onUserAdd={onUserAdd}/>
       <UserList userListState={{userList, setUserList}} />
       
     </>

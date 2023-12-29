@@ -13,3 +13,9 @@ test('it shows two inputs and a button', () => {
   expect(button).toBeInTheDocument()
 
 })
+
+test('it calls on setUserList when form is submitted', () => {
+  //NOT THE BEST IMPLEMENTATION
+
+  
+})

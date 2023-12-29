@@ -2,10 +2,10 @@ import { FormEvent, useState } from "react"
 import { User } from "./App"
 
 interface UserFormProps {
-  setUserList: React.Dispatch<React.SetStateAction<User[]>>
+  onUserAdd: (userForm : User) => void
 }
 
-export default function UserForm ({ setUserList } : UserFormProps) {
+export default function UserForm ({ onUserAdd } : UserFormProps) {
 
   const [userForm, setUserForm] = useState<User>({
     name: '',
@@ -13,21 +13,21 @@ export default function UserForm ({ setUserList } : UserFormProps) {
   })
 
   const handleUserFormSubmit = (e: FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); 
 
-    setUserList((prev) => [...prev, userForm])
+    onUserAdd(userForm);
     //clear user form
-    setUserForm({ name: '', email: ''})
+    setUserForm({ name: '', email: ''});
   };
-
+  
   const handleUserFormChange = (value: string, type: string) => {
-    setUserForm((prev) => ({ ...prev, [type]: value}))
+    setUserForm((prev) => ({ ...prev, [type]: value}));
   };
   return (
-    <form className='p-4 rounded-lg border-black border flex justify-center items-center flex-col gap-4' onSubmit={(e)=> handleUserFormSubmit(e)}>
+    <form className='flex flex-col items-center justify-center gap-4 p-4 border border-black rounded-lg' onSubmit={(e)=> handleUserFormSubmit(e)}>
       <input className='p-2 rounded-lg' type="text" name="name" placeholder='name' onChange={(e) => handleUserFormChange(e.target.value, e.target.name)} value={userForm.name}/>
       <input className='p-2 rounded-lg' type="text" name="email" placeholder='email' onChange={(e) => handleUserFormChange(e.target.value, e.target.name)} value={userForm.email}/>
-      <button className='bg-black p-4 rounded-lg text-white'>Submit</button>
+      <button className='p-4 text-white bg-black rounded-lg'>Submit</button>
     </form>
   )
 }
